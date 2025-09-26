@@ -44,7 +44,7 @@ disp(['[Nt,Ns,Nw]=[' num2str([Nt,Ns,Nw]) ']'])
 % Modes propres
 for in=1:nmax
     % Y_ij, avec i=>n et j=>s
-    Y(in,:)=sin(kn(in)*s)
+    Y(in,:)=sin(kn(in)*s);
 end
  %=> visualisation de quelques modes propres
 figure(1)
@@ -52,4 +52,57 @@ plot(s,Y([1:3 nmax],:),'LineWidth',2)
 xlabel('s [m]')
 legend('n=1','n=2','n=3','n=nmax')
 set(gca,'FontSize',24)
+
+% Amplitude modale
+an=2*H./(n*pi)*L/(L-el).*sin(kn*el)./(kn*el);
+bn=zeros(size(n));
+%=> visualisation des amplitudes modales an
+figure(2);
+stem(wn,abs(an),'LineWidth',2)
+xlabel('wn [rad/s]')
+ylabel('|an| [m]')
+set(gca,'FontSize',24)
+
+% Figure de malo
+% Fonction en temps
+for in=1:nmax
+    % T_ij, avec i=>n et j=>t
+    T(in,:)=an(in)*cos(wn(in)*t)+bn(in)*sin(wn(in)*t)/wn(in); 
+end
+%=> visualisation de T(t) pour quelques modes
+figure(3);
+plot(t,T([1:3 nmax],:),'LineWidth',2)
+xlabel('t [s]')
+legend('n=1','n=2','n=3','n=nmax')
+set(gca,'FontSize',24)
+%% ========================================================================
+
+%% ========================================================================
+%% SOLUTION GENERALE ======================================================
+u=Y'*T;    % u_ij, avec i=>s et j=>t
+%-> visualisation de u(s,t) à divers instants
+figure(4);subplot(1,2,1)
+plot(s,u(:,[1 10 20]),'LineWidth',2);
+xlabel('s [m]');ylabel('u(s,t) [m]');
+legend(['t=' num2str(t(1)) ],['t=' num2str(t(10)) ],['t=' num2str(t(20)) ])
+axis equal
+set(gca,'FontSize',24)
+%-> visualisation de u(s,t) en divers point de la corde
+figure(4);subplot(1,2,2)
+plot(t,u([1 10 20],:),'LineWidth',2);
+xlabel('t [m]');ylabel('u(s,t) [m]');
+legend(['s=' num2str(s(1)) ],['s=' num2str(s(10)) ],['s=' num2str(s(20)) ])
+set(gca,'FontSize',24)
+%-> visualisation de u(s,t) au cours du temps
+figure(5);
+for j=1:length(t)
+    plot(s,u(:,j),'k','LineWidth',2);hold on
+    plot(s([1 10 20]),u([1 10 20],j),'o','MarkerSize',8,'LineWidth',2)
+    hold off
+    xlabel('s [m]');ylabel('u(s,t) [m]');
+    axis equal;axis([0,L,-H,H])
+    set(gca,'FontSize',24);
+    pause(0.1)
+end
+%% ========================================================================
 
