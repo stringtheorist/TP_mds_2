@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 % % Domaine modal
 % nmax=10;        % Nombre maximal de mode considere      
@@ -21,3 +22,6 @@ function [n, kn, wn, Lamb, Per, Freq] = DomaineModal(L, C, nmax)
 end
 
 
+=======
+function [n,kn,wn,Lamb,Per,Freq]=DomaineModal(Nw,L,C)
+>>>>>>> main
