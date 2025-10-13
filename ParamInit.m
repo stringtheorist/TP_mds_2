@@ -20,3 +20,4 @@ nmax=10;        % Nombre maximal de mode considere
 Nw=nmax;
 
 Aff = 1;
+Type = [1,2,3];
