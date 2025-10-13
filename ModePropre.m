@@ -1,4 +1,4 @@
-function Y=ModePropre(kn,s,Nw,Aff)
+function Y=ModePropre(kn,s,Nw,Aff,nmax)
   % Modes propres
   for in=1:Nw
       % Y_ij, avec i=>n et j=>s
