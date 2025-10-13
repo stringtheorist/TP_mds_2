@@ -6,3 +6,5 @@ function [A,C,N0,Def]=ParamInter(R,L,ro,E,Note)
   N0=ro*A*C^2;    % Tension [N]
   Def=N0/(E*A);   % Deformation [~]
 
+end
+
