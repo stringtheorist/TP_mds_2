@@ -3,6 +3,8 @@
 clear;close all;clc;
 %% ========================================================================
 % Chargement des parametres
+
+sdfsdf
 [L,R,E,ro,Note,H,el,Nw,Aff,nmax]=ParamInit;
 % Parametres intermediaires
 [A,C,N0,Def]=ParamInter(R,L,ro,E,Note);
