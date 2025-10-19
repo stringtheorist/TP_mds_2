@@ -1,8 +1,8 @@
-function Illustration(Type,u,s,t)
+function Illustration(Type,u,s,t,Nt,L,H)
 
 for i = 1:length(Type)
 
-    if (i == 1)
+    if (Type(i) == 1)
       %-> visualisation de u(s,t) a divers instants
        figure(4);subplot(1,2,1)
        plot(s,u(:,[1 10 20]),'LineWidth',2);
@@ -11,7 +11,7 @@ for i = 1:length(Type)
        axis equal
        set(gca,'FontSize',24)
 
-    elseif (i == 2)    
+    elseif (Type(i) == 2)
       %-> visualisation de u(s,t) en divers point de la corde
        figure(4);subplot(1,2,2)
        plot(t,u([1 10 20],:),'LineWidth',2);
@@ -22,7 +22,7 @@ for i = 1:length(Type)
     else
         %-> visualisation de u(s,t) au cours du temps
        figure(5);
-    
+
        for j=1:Nt
            plot(s,u(:,j),'k','LineWidth',2);hold on
            plot(s([1 10 20]),u([1 10 20],j),'o','MarkerSize',8,'LineWidth',2)
