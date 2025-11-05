@@ -1,4 +1,4 @@
-function Illustration(Type,u,s,t,Nt,L,H)
+function Illustration(Type,u,s,t,Nt,L,H,dt,tmax)
 
 for i = 1:length(Type)
 
@@ -29,8 +29,9 @@ for i = 1:length(Type)
            hold off
            xlabel('s [m]');ylabel('u(s,t) [m]');
            axis equal;axis([0,L,-H,H])
+           title(['temps = ',num2str(t(j)),' s.',newline,'Fin = ',num2str(tmax),' s.']);
            set(gca,'FontSize',24);
-           pause(0.1)
+           pause(dt)
        end
 
     end
