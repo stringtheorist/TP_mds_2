@@ -3,8 +3,10 @@
 clear;close all;clc;
 %% ========================================================================
 % Chargement des parametres
+nmax=10;        % Nombre maximal de mode considere
+Note=440;       % Frequence fondamentale [Hz]
+[L,R,E,ro,Note,H,el,Nw,Aff,nmax]=ParamInit(nmax,Note);
 
-[L,R,E,ro,Note,H,el,Nw,Aff,nmax]=ParamInit;
 % Parametres intermediaires
 [A,C,N0,Def]=ParamInter(R,L,ro,E,Note);
 % Domaine modal

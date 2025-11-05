@@ -1,4 +1,4 @@
-function [L,R,E,ro,Note,H,el,Nw,Aff,nmax]=ParamInit
+function [L,R,E,ro,Note,H,el,Nw,Aff]=ParamInit(nmax,Note)
 
 % Geometrie : section cicrculaire
 L=1;            % Longueur [m]
