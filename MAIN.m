@@ -5,7 +5,7 @@ clear;close all;clc;
 % Chargement des parametres
 nmax=10;        % Nombre maximal de mode considere
 Note=440;       % Frequence fondamentale [Hz]
-[L,R,E,ro,Note,H,el,Nw,Aff,nmax]=ParamInit(nmax,Note);
+[L,R,E,ro,H,el,Nw,Aff]=ParamInit(nmax,Note);
 
 % Parametres intermediaires
 [A,C,N0,Def]=ParamInter(R,L,ro,E,Note);
@@ -17,7 +17,7 @@ Note=440;       % Frequence fondamentale [Hz]
 [dt,t,Nt,tmax]=DomaineTemporel(Per,L);
 % Rq : dans une phase de bebeugage, il faut que [Nt,Ns,Nw] aient des valeurs
 % raisonnables (<=1000) et si possible distinctes.
-disp(['[Nt,Ns,Nw]=[' num2str([Nt,Ns,Nw]) ']'])
+disp(['[Nt,Ns,Nw]=[' num2str([Nt,Ns,Nw]) ']']);
 
 %% ========================================================================
 %% ANALYSE MODALE =========================================================
