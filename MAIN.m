@@ -5,6 +5,8 @@ clear;close all;clc;
 % Chargement des parametres
 nmax=50;        % Nombre maximal de mode considere
 Note=440;       % Frequence fondamentale [Hz]
+NP=5;           % Nombre de période (pour la plus grande des périodes, ie. le mode avec la plus petite fréquence) que l'on veut représenter
+
 [L,R,E,ro,H,el,Nw,Aff]=ParamInit(nmax,Note);
 
 % Parametres intermediaires
@@ -17,7 +19,7 @@ Note=440;       % Frequence fondamentale [Hz]
 [s,Ns,ds]=DomaineSpatial(L,Lamb);
 
 % Domaine temporel
-[dt,t,Nt,tmax]=DomaineTemporel(Per,L);
+[dt,t,Nt,tmax]=DomaineTemporel(Per,L,NP);
 % Rq : dans une phase de bebeugage, il faut que [Nt,Ns,Nw] aient des valeurs
 % raisonnables (<=1000) et si possible distinctes.
 disp(['[Nt,Ns,Nw]=[' num2str([Nt,Ns,Nw]) ']']);
