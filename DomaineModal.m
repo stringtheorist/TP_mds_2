@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 
 % % Domaine modal
 % nmax=10;        % Nombre maximal de mode considere      
@@ -12,7 +12,7 @@
 
 
 
-function [n, kn, wn, Lamb, Per, Freq] = DomaineModal(L, C, nmax)
+function [n, kn, wn, Lamb, Per, Freq] = DomaineModal(nmax,L, C)
     n = (1:nmax)';          
     kn = n * pi / L;        
     wn = C * kn;            
@@ -22,6 +22,4 @@ function [n, kn, wn, Lamb, Per, Freq] = DomaineModal(L, C, nmax)
 end
 
 
-=======
-function [n,kn,wn,Lamb,Per,Freq]=DomaineModal(Nw,L,C)
->>>>>>> main
+

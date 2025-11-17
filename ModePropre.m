@@ -1,5 +1,6 @@
 function Y=ModePropre(kn,s,Nw,Aff)
   % Modes propres
+  Y=zeros(Nw, length(s));
   for in=1:Nw
       % Y_ij, avec i=>n et j=>s
       Y(in,:)=sin(kn(in)*s);
@@ -8,9 +9,10 @@ function Y=ModePropre(kn,s,Nw,Aff)
   if (Aff==1)
     %=> visualisation de quelques modes propres
     figure(1);
-    plot(s,Y([1:3 nmax],:),'LineWidth',2)
+    plot(s,Y([1:3 Nw],:),'LineWidth',2)
     xlabel('s [m]')
     legend('n=1','n=2','n=3','n=nmax')
+    title("Modes propres")
     set(gca,'FontSize',24)
   end
-end
+
