@@ -10,7 +10,7 @@ function Y = ModePropre(kn, s, Nw, Aff, nmax, typeBC)
 % s   : vecteur spatial
 % Nw  : nombre de modes stockés
 % Aff : 1 → trace quelques modes, 0 → pas de figure
-% nmax: indice du dernier mode théorique (pour l'affichage, optionnel)
+% nmax: indice du dernier mode théoriqu
 
 Y = zeros(Nw, length(s));
 
