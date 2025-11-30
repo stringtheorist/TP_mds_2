@@ -1,4 +1,8 @@
-function p = pression(Pmicro,rho_air,c_air,A,k,wn,Y,u,s)
-  [theta,phi,r] = cart2sph([P 0]-[s 0 0]);
-  p = w.^2*rho_air*sqrt(A/pi)*derive(u)
+function p = pression(Pmicro,rho_air,c_air,A,kn,wn,Y,u,s)
+  S = zeros(
+  [theta,phi,r] = cart2sph([P 0]-[s 0 0]); %phi est toujours égal à 0 ici, donc e
+  Du=derive(Y,an,bn,wn,t);
+
+  pn = ((wn.^2)*rho_air.*sqrt(A/pi)./(r.*4*pi*c_son)).*cos(theta).*(bn+i.*an).*exp(i.*(wn.*t-kn.*r)).*(1+1/(kn.*r));
+  pn = partie_reele(pn);
 

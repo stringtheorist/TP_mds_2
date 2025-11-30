@@ -1,11 +1,8 @@
-function T = FctTemporelle(w, wn, an, bn, t, Aff)
+function T = FctTemporelle(wn, an, bn, t, Aff)
   nmax=length(wn);
   T=zeros(nmax, length(t));
 
-  for in=1:nmax
-      % T_ij, avec i=>n et j=>t
-      T(in,:)=an(in)*cos(wn(in)*t)+bn(in)*sin(wn(in)*t)/wn(in);
-  end
+  T = an.*cos(wn.*t)+bn.*sin(wn.*t)./wn;
 
   if (Aff==1)
     %=> visualisation de T(t) pour quelques modes

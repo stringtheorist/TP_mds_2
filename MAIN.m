@@ -1,6 +1,12 @@
 %% ============================================================================
 %% INITIALISATION =========================================================
 clear;close all;clc;
+
+addpath('./Fct');
+addpath('./Initialisation');
+addpath('./Mode');
+addpath('./Supplement');
+
 %% ========================================================================
 % Chargement des parametres
 nmax=50;        % Nombre maximal de mode considere
@@ -35,7 +41,7 @@ Y=ModePropre(kn,s,Nw,Aff,nmax);
 
 % Fonction en temps
 disp(nmax);
-T=FctTemporelle(Nw,wn,an,bn,t,Aff);
+T=FctTemporelle(wn,an,bn,t,Aff);
 
 % Deplacement
 u=FctDeplacement(Y,T);

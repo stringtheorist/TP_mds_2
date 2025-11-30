@@ -1,9 +1,6 @@
 function Y=ModePropre(kn,s,Nw,Aff,nmax)
   % Modes propres
-  for in=1:Nw
-      % Y_ij, avec i=>n et j=>s
-      Y(in,:)=sin(kn(in)*s);
-  end
+  Y = sin(kn.*s);
 
   if (Aff==1)
     %=> visualisation de quelques modes propres
