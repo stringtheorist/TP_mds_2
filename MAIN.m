@@ -6,6 +6,8 @@ addpath('./Fct');
 addpath('./Initialisation');
 addpath('./Mode');
 addpath('./Supplement');
+addpath('./Violon');
+
 
 %% ========================================================================
 % Chargement des parametres
@@ -13,13 +15,14 @@ nmax=50;        % Nombre maximal de mode considere
 Note=440;       % Frequence fondamentale [Hz]
 NP=5;           % Nombre de période (pour la plus grande des périodes, ie. le mode avec la plus petite fréquence) que l'on veut représenter
 
-[L,R,E,ro,H,el,Nw,Aff]=ParamInit(nmax,Note);
+[L,R,E,ro,H,el,Nw,Aff,omega]=ParamInit(nmax,Note);
 
 % Parametres intermediaires
 [A,C,N0,Def]=ParamInter(R,L,ro,E,Note);
 
 % Domaine modal
 [n,kn,wn,Lamb,Per,Freq]=DomaineModal(L, C, nmax);
+wn
 
 % Domaine spatial
 [s,Ns,ds]=DomaineSpatial(L,Lamb);
@@ -36,16 +39,22 @@ disp(['[Nt,Ns,Nw]=[' num2str([Nt,Ns,Nw]) ']']);
 % Modes propres
 Y=ModePropre(kn,s,Nw,Aff,nmax);
 
+%Y=ModesPropresViolon(kn,s,Nw,Aff,nmax);
+
+
 % Amplitude modale
-[an,bn]=AmplitudeModale(L,el,kn,wn,n,H,Aff);
+%[an,bn]=AmplitudeModale(L,el,kn,wn,n,H,Aff);
 
 % Fonction en temps
 disp(nmax);
 T=FctTemporelle(wn,an,bn,t,Aff);
 
+%q = FonctionTemporelleViolon(s,t,kn,wn,L,A,el,ro,omega,Aff);
+
 % Deplacement
 u=FctDeplacement(Y,T);
 
+u=FctDeplacementViolon(Y,q);
 
 %% ========================================================================
 %% VALORISATION ==========================================================
