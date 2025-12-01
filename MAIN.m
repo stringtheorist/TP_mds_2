@@ -6,6 +6,8 @@ addpath('./Fct');
 addpath('./Initialisation');
 addpath('./Mode');
 addpath('./Supplement');
+addpath('./Violon');
+
 
 %% ========================================================================
 % Chargement des parametres
@@ -16,13 +18,16 @@ P_micro = [1 1]; %Position du micro
 ps = 10; %Echantillonage de s pour permettre de calculer rapidement une intégrale sur [0,L]
 pt = 50; %Echantillonage de t
 
-[L,R,E,ro,H,el,Nw,Aff,rho_air,c_son]=ParamInit(nmax,Note);
+
+[L,R,E,ro,H,el,Nw,Aff,rho_air,c_son,omega]=ParamInit(nmax,Note);
+
 
 % Parametres intermediaires
 [A,C,N0,Def]=ParamInter(R,L,ro,E,Note);
 
 % Domaine modal
 [n,kn,wn,Lamb,Per,Freq]=DomaineModal(L, C, nmax);
+wn
 
 % Domaine spatial
 [s,Ns,ds]=DomaineSpatial(L,Lamb);
@@ -39,16 +44,22 @@ disp(['[Nt,Ns,Nw]=[' num2str([Nt,Ns,Nw]) ']']);
 % Modes propres
 Y=ModePropre(kn,s,Nw,Aff,nmax);
 
+%Y=ModesPropresViolon(kn,s,Nw,Aff,nmax);
+
+
 % Amplitude modale
-[an,bn]=AmplitudeModale(L,el,kn,wn,n,H,Aff);
+%[an,bn]=AmplitudeModale(L,el,kn,wn,n,H,Aff);
 
 % Fonction en temps
 disp(nmax);
 T=FctTemporelle(wn,an,bn,t,Aff);
 
+%q = FonctionTemporelleViolon(s,t,kn,wn,L,A,el,ro,omega,Aff);
+
 % Deplacement
 u=FctDeplacement(Y,T);
 
+%u=FctDeplacementViolon(Y,q);
 
 %% ========================================================================
 %% VALORISATION ==========================================================
