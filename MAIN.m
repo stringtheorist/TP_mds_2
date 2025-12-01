@@ -54,7 +54,7 @@ T=FctTemporelle(wn,an,bn,t,Aff);
 % Deplacement
 u=FctDeplacement(Y,T);
 
-u=FctDeplacementViolon(Y,q);
+%u=FctDeplacementViolon(Y,q);
 
 %% ========================================================================
 %% VALORISATION ==========================================================
