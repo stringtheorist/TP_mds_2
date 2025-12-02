@@ -1,9 +1,9 @@
-function q = FonctionTemporelleViolon(s,t,kn,wn,el,ro,omega)
+function q = FonctionTemporelleViolon(s,t,kn,wn,L,A,el,ro,omega,Aff)
 
     nmax=length(wn);
     q=zeros(nmax, length(t));
 
-    q = 2/(ro*A*L) * ( sins(el*kn)./wn ) .* ( ( wn.*sin(omega*t) .- omega*sin(wn.*t) )/( wn.^2 - omega^2 );
+    q = 2/(ro*A*L) * ( sin(el*kn)./wn ) .* ( ( wn.*sin(omega*t) - omega*sin(wn.*t) )./( wn.^2 - omega^2 ));
 
     if (Aff==1)
      %=> visualisation de q(t) pour quelques modes
