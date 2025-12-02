@@ -7,7 +7,7 @@ function [p,tp] = pression(P_micro,rho_air,c_son,A,kn,wn,an,bn,Y,u,s,t,ps,pt) %s
   end
 
   tp = zeros(floor(length(t)/pt));
-  for jp=1:1:length(pt)
+  for jp=1:1:length(tp)
     j = jp*pt;
     tp(jp) = t(j);
   end
