@@ -11,7 +11,7 @@ addpath('./Violon');
 
 %% ========================================================================
 % Chargement des parametres
-nmax=30;        % Nombre maximal de mode considere
+nmax=50;        % Nombre maximal de mode considere
 Note=440;       % Frequence fondamentale [Hz]
 NP=5;           % Nombre de période (pour la plus grande des périodes, ie. le mode avec la plus petite fréquence) que l'on veut représenter
 P_micro = [1 1]; %Position du micro

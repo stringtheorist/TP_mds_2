@@ -1,24 +1,24 @@
 function [p,tp] = pression(P_micro,rho_air,c_son,A,kn,wn,an,bn,Y,u,s,t,ps,pt) %si ps = 1 on prend tous les s et t, si pas = 2, on prend un pas sur 2
 
-  sp = zeros(floor(length(s)/ps));
+  sp = zeros(1,floor(length(s)/ps));
   for jp=1:1:length(sp)
     j = jp*ps;
     sp(jp) = s(j);
   end
 
-  tp = zeros(floor(length(t)/pt));
+  tp = zeros(1,floor(length(t)/pt));
   for jp=1:1:length(tp)
     j = jp*pt;
     tp(jp) = t(j);
   end
 
-  theta = zeros(length(sp));
+  theta = zeros(1,length(sp));
   r = zeros(length(sp));
   for j=1:1:length(sp)
     [theta(j),phi,r(j)] = cart2sph([P_micro 0]-[sp(j) 0 0]); %phi est toujours égal à 0 ici
   end
 
-  Yp = zeros(length(wn),length(sp))
+  Yp = zeros(length(wn),length(sp));
   for kp=1:1:length(sp)
     k = kp*ps;
     Yp(:,kp) = Y(:,k);
@@ -40,7 +40,7 @@ function [p,tp] = pression(P_micro,rho_air,c_son,A,kn,wn,an,bn,Y,u,s,t,ps,pt) %s
   end
 
   %Intégration
-  I = zeros(length(tp));
+  I = zeros(1,length(tp));
   for l=1:1:length(tp)
     for k=1:1:length(wn)
       In = 0;
