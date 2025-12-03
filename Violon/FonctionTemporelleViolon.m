@@ -5,7 +5,8 @@ function q = FonctionTemporelleViolon(s,t,kn,wn,L,A,el,ro,omega,Aff)
 
     q = 2/(ro*A*L) * ( sin(el*kn)./wn ) .* ( ( wn.*sin(omega*t) - omega*sin(wn.*t) )./( wn.^2 - omega^2 ));
 
-    if (Aff==1)
+    rep = input('Voulez vous visualiser q(t) pour quelques modes ? (o/n) ','s');
+    if (Aff=='o')
      %=> visualisation de q(t) pour quelques modes
      figure(3);
      plot(t,q([1:3 nmax],:),'LineWidth',2)

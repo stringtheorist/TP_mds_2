@@ -2,7 +2,8 @@ function Y = ModesPropresViolon(kn,s,Nw,Aff,nmax)
 % Modes propres
   Y = sin(kn.*s);
 
-  if (Aff==1)
+  irep = input('Voulez vous visualiser quelques modes propres ? (o/n) ','s');
+  if (Aff=='o')
     %=> visualisation de quelques modes propres
     figure(1);
     plot(s,Y([1:3 nmax],:),'LineWidth',2)

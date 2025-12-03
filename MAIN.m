@@ -27,46 +27,103 @@ pt = 50; %Echantillonage de t
 
 % Domaine modal
 [n,kn,wn,Lamb,Per,Freq]=DomaineModal(L, C, nmax);
-wn
+
 
 % Domaine spatial
 [s,Ns,ds]=DomaineSpatial(L,Lamb);
 
 % Domaine temporel
 [dt,t,Nt,tmax]=DomaineTemporel(Per,L,NP);
-% Rq : dans une phase de bebeugage, il faut que [Nt,Ns,Nw] aient des valeurs
+% Rq : dans une phase de debugage, il faut que [Nt,Ns,Nw] aient des valeurs
 % raisonnables (<=1000) et si possible distinctes.
 disp(['[Nt,Ns,Nw]=[' num2str([Nt,Ns,Nw]) ']']);
 
 
 %% ========================================================================
 %% ANALYSE MODALE =========================================================
-% Modes propres
-Y=ModePropre(kn,s,Nw,Aff,nmax);
 
-%Y=ModesPropresViolon(kn,s,Nw,Aff,nmax);
+while (1)
+  rI = input('Voulez vous simuler un violon (v) ou une corde pincée (p) ? ','s' );
+  if ((rI=='v')||(rI=='p'))
+    break
+  end
+  disp('Les réponses acceptables sont : v ou p');
+end
 
+if (rI=='p')
+  % Modes propres
+  Y=ModePropre(kn,s,Nw,Aff,nmax);
 
-% Amplitude modale
-%[an,bn]=AmplitudeModale(L,el,kn,wn,n,H,Aff);
+  % Amplitude modale
+  [an,bn]=AmplitudeModale(L,el,kn,wn,n,H,Aff);
 
-% Fonction en temps
-disp(nmax);
-T=FctTemporelle(wn,an,bn,t,Aff);
+  % Fonction en temps
+  T=FctTemporelle(wn,an,bn,t,Aff);
 
-%q = FonctionTemporelleViolon(s,t,kn,wn,L,A,el,ro,omega,Aff);
+  % Deplacement
+  u=FctDeplacement(Y,T);
+else
+  % Modes propres
+  Y=ModesPropresViolon(kn,s,Nw,Aff,nmax);
 
-% Deplacement
-u=FctDeplacement(Y,T);
+  % Fonction en temps
+  q = FonctionTemporelleViolon(s,t,kn,wn,L,A,el,ro,omega,Aff);
 
-%u=FctDeplacementViolon(Y,q);
+  % Deplacement
+  u=FctDeplacementViolon(Y,q);
+
+end
 
 %% ========================================================================
 %% VALORISATION ==========================================================
-Type=1;Illustration(Type,u,s,t,Nt,L,H,dt,tmax);
-Type=2;Illustration(Type,u,s,t,Nt,L,H,dt,tmax);
-Type=3;Illustration(Type,u,s,t,Nt,L,H,dt,tmax);
-% D'autres valorisations peuvent etre envisagees, quelques propostion
-% Film ?
-% Son ?
+
+Type = [];
+while (1)
+  r=input('Voulez vous visualiser u(s,t) a divers instant ? (o/n) ','s');
+  if (r=='o')
+    Type = [1];
+    break
+  elseif (r=='n')
+    break
+  end
+  disp("La réponse donné doit être : 'o' ou 'n'");
+end
+
+while (1)
+  r=input('Voulez vous visualiser u(s,t) en divers points de la corde ? (o/n) ','s');
+  if (r=='o')
+    Type = [Type 2];
+    break
+  elseif (r=='n')
+    break
+  end
+  disp("La réponse donné doit être : 'o' ou 'n'");
+end
+
+while (1)
+  r=input('Voulez vous afficher la corde en mouvement ? (o/n) ','s');
+  if (r=='o')
+    Type = [Type 3];
+    break
+  elseif (r=='n')
+    break
+  end
+  disp("La réponse donné doit être : 'o' ou 'n'");
+end
+
+Illustration(Type,u,s,t,Nt,L,H,dt,tmax);
+
+
+
+while (1)
+  r=input('Voulez vous produire le son associé ? (o/n) ','s');
+  if (r=='o')
+    Son
+    break
+  elseif (r=='n')
+    break
+  end
+  disp("La réponse donné doit être : 'o' ou 'n'");
+end
+
 % Autre ?

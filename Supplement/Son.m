@@ -1,5 +1,11 @@
   duree_son = 1.2;
-  [p,tp] = pression(P_micro,rho_air,c_son,A,kn,wn,an,bn,Y,u,s,t,ps,pt);
+
+  if (rI=='p')
+    [p,tp] = pression(P_micro,rho_air,c_son,A,kn,wn,an,bn,Y,s,t,ps,pt);
+  else
+    [p,tp] = pression_violon(P_micro,rho_air,c_son,A,kn,wn,Y,u,s,t,ps,pt);
+  end
+
   N = floor(duree_son/max(tp));
   tpp = zeros(1,length(tp)*N);
   for k=1:1:length(tp)
