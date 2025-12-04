@@ -3,7 +3,7 @@ function T = FctTemporelle(wn, an, bn, t, Aff)
   T=zeros(nmax, length(t));
 
   T = an.*cos(wn.*t)+bn.*sin(wn.*t)./wn;
-  Aff = input('Voulez vous visualiser T(t) pour quelque modes ? (o/n) ','s');
+
   if (Aff=='o')
     %=> visualisation de T(t) pour quelques modes
     figure(3);

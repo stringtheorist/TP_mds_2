@@ -2,7 +2,6 @@ function [an, bn] = AmplitudeModale(L, el, kn, wn, n, H, Aff)
     an = 2 * H ./ (n * pi) .* (L / (L - el)) .* sin(kn * el) ./ (kn * el);
     bn = zeros(size(n));
 
-    Aff = input('Voulez vous visualiser des amplitudes modales an ? (o/n) ','s');
     if (Aff=='o')
       %=> visualisation des amplitudes modales an
       figure(2);

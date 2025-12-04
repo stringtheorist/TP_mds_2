@@ -2,7 +2,6 @@ function Y=ModePropre(kn,s,Nw,Aff,nmax)
   % Modes propres
   Y = sin(kn.*s);
 
-  Aff = input('Voulez vous afficher quelques modes propres ? (o/n) ','s');
   if (Aff=='o')
     %=> visualisation de quelques modes propres
     figure(1);

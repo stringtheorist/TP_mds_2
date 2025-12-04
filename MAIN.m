@@ -12,14 +12,13 @@ addpath('./Violon');
 %% ========================================================================
 % Chargement des parametres
 nmax=50;        % Nombre maximal de mode considere
-Note=440;       % Frequence fondamentale [Hz]
+Note=540;       % Frequence fondamentale [Hz]
 NP=5;           % Nombre de période (pour la plus grande des périodes, ie. le mode avec la plus petite fréquence) que l'on veut représenter
 P_micro = [1 1]; %Position du micro
 ps = 10; %Echantillonage de s pour permettre de calculer rapidement une intégrale sur [0,L]
 pt = 50; %Echantillonage de t
 
-
-[L,R,E,ro,H,el,Nw,Aff,rho_air,c_son,omega]=ParamInit(nmax,Note);
+[L,R,E,ro,H,el,Nw,Aff,rho_air,c_son,omega]=ParamInit(nmax);
 
 
 % Parametres intermediaires
@@ -52,21 +51,26 @@ end
 
 if (rI=='p')
   % Modes propres
+  Aff = input('Voulez vous afficher quelques modes propres ? (o/n) ','s');
   Y=ModePropre(kn,s,Nw,Aff,nmax);
 
   % Amplitude modale
+  Aff = input('Voulez vous visualiser des amplitudes modales an ? (o/n) ','s');
   [an,bn]=AmplitudeModale(L,el,kn,wn,n,H,Aff);
 
   % Fonction en temps
+  Aff = input('Voulez vous visualiser T(t) pour quelque modes ? (o/n) ','s');
   T=FctTemporelle(wn,an,bn,t,Aff);
 
   % Deplacement
   u=FctDeplacement(Y,T);
 else
   % Modes propres
+  Aff = input('Voulez vous visualiser quelques modes propres ? (o/n) ','s');
   Y=ModesPropresViolon(kn,s,Nw,Aff,nmax);
 
   % Fonction en temps
+  Aff = input('Voulez vous visualiser q(t) pour quelques modes ? (o/n) ','s');
   q = FonctionTemporelleViolon(s,t,kn,wn,L,A,el,ro,omega,Aff);
 
   % Deplacement

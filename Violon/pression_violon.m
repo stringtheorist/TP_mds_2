@@ -1,4 +1,4 @@
-function [p,tp] = pression_violon(P_micro,rho_air,c_son,A,kn,wn,Y,u,s,t,ps,pt) %si ps = 1 on prend tous les s et t, si pas = 2, on prend un pas sur 2
+function [p,tp] = pression_violon(P_micro,rho_air,c_son,A,wn,Y,u,s,t,ps,pt) %si ps = 1 on prend tous les s et t, si pas = 2, on prend un pas sur 2
 
   %Re-calibrage des données pour ne pas trop en avoir et ne pas se surcharger en calcul
   sp = zeros(1,floor(length(s)/ps));

@@ -1,4 +1,4 @@
-function [L,R,E,ro,H,el,Nw,Aff,omega,rho_air,c_son]=ParamInit(nmax,Note)
+function [L,R,E,ro,H,el,Nw,Aff,omega,rho_air,c_son]=ParamInit(nmax)
 
 % Geometrie : section cicrculaire
 L=1;            % Longueur [m]
@@ -15,7 +15,7 @@ el=L/4;         % poistion [m]
 % Domaine modal
 Nw=nmax;
 
-Aff = 1;
+Aff = 'n';
 
 % pour produire du son
 rho_air = 1.204; %A 20 degré celsius

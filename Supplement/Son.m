@@ -1,9 +1,32 @@
-  duree_son = 1.2;
+  disp(' ');
+  disp('Donner la position du micro');
+  P_micro(1) = input('x = ');
+  while (1)
+    P_micro(2) = input('y = ');
+    if (P_micro(2)!=0)
+      break
+    end
+    disp('y doit être différent de 0.');
+  end
 
   if (rI=='p')
-    [p,tp] = pression(P_micro,rho_air,c_son,A,kn,wn,an,bn,Y,s,t,ps,pt);
+    [p,tp] = pression(P_micro,rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt);
   else
-    [p,tp] = pression_violon(P_micro,rho_air,c_son,A,kn,wn,Y,u,s,t,ps,pt);
+    [p,tp] = pression_violon(P_micro,rho_air,c_son,A,wn,Y,u,s,t,ps,pt);
+  end
+
+  duree_son = 1.2;
+  disp(' ');
+  rep = input('Durée pour le son (en s.) : ');
+  if (length(rep)!=0)
+    duree_son = rep;
+  end
+
+  rep = input('Voulez vous afficher le graphique de la pression acoustique p(t) ? (o/n) ','s');
+  if (rep=='o')
+    figure(6);
+    plot(t,tp);
+    xlabel('t [s]'); ylabel('p(t) [N/m²]');
   end
 
   N = floor(duree_son/max(tp));
@@ -22,10 +45,6 @@
   L = length(tpp);
   T = tpp(length(tpp))/(L-1);
   Fs = 1/T;
-
-  t_0 = 0.5 * tpp(length(tpp)); % Milieu du "pic" de l'impulsion
-  tau = 0.1 * tpp(length(tpp)); % Comment "aigu" la rendre
-  gaussian = exp(-((tpp - t_0)/tau).^2);
 
   Niveau_sonore = 0.15/max(b);
   sound(Niveau_sonore*b,Fs);

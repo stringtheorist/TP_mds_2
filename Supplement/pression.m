@@ -1,4 +1,4 @@
-function [p,tp] = pression(P_micro,rho_air,c_son,A,kn,wn,an,bn,Y,s,t,ps,pt) %si ps = 1 on prend tous les s et t, si pas = 2, on prend un pas sur 2
+function [p,tp] = pression(P_micro,rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt) %si ps = 1 on prend tous les s et t, si pas = 2, on prend un pas sur 2
 
   sp = zeros(1,floor(length(s)/ps));
   for jp=1:1:length(sp)
