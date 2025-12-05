@@ -1,7 +1,7 @@
 function [L,R,E,ro,H,el,Nw,Aff,omega,rho_air,c_son]=ParamInit(nmax)
 
 % Geometrie : section cicrculaire
-L=1;            % Longueur [m]
+L=0.3;            % Longueur [m]
 R=0.001;        % Rayon [m]
 
 % Materiau : acier

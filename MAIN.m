@@ -13,7 +13,7 @@ addpath('./Violon');
 % Chargement des parametres
 nmax=50;        % Nombre maximal de mode considere
 Note=440;       % Frequence fondamentale [Hz]
-NP=5;           % Nombre de période (pour la plus grande des périodes, ie. le mode avec la plus petite fréquence) que l'on veut représenter
+NP=1;           % Nombre de période (pour la plus grande des périodes, ie. le mode avec la plus petite fréquence) que l'on veut représenter
 P_micro = [1 1]; %Position du micro
 ps = 10; %Echantillonage de s pour permettre de calculer rapidement une intégrale sur [0,L]
 pt = 10; %Echantillonage de t
@@ -130,4 +130,5 @@ while (1)
   disp("La réponse donné doit être : 'o' ou 'n'");
 end
 
-% Autre ?
+diagramme_directivite;
+instrument;

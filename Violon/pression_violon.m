@@ -28,7 +28,7 @@ function [p,tp] = pression_violon(P_micro,rho_air,c_son,A,wn,Y,u,s,t,ps,pt) %si 
   up = zeros(length(sp),length(tp));
   for kp=1:1:length(sp)
     k = kp*ps;
-    for jp=1:1:length(sp)
+    for jp=1:1:length(tp)
       j = jp*pt;
       up(kp,jp) = u(k,j);
     end

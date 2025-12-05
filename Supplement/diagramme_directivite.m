@@ -10,26 +10,26 @@ end
 if (rep=='o')
 
   milieu = L/2;
-  Rayon = milieu + 0.5;
+  Rayon = milieu + 10000*L;
+  n_point = 200;
 
   Micro =  [];
   phi = [];
-  n_point = 50;
   for k=0:1:(n_point-1)
-    Point = [Rayon*cos(2*pi*k/n_point)+milieu Rayon*sin(2*pi*k/n_point)];
-    [Angle,x,y] = cart2sph([Point-[L/2 0] 0]);
+    Point = [Rayon*cos(2*pi*k/n_point)+milieu, Rayon*sin(2*pi*k/n_point)];
+    [Angle,x,y] = cart2sph([Point-[milieu 0] 0]);
     Micro = [Micro; Point];
     phi = [phi Angle];
   end
 
 
   decibel = [];
-  ps = 10;
-  pt = 50;
+  ps = 20;
+  pt = 200;
   if (rI=='p')
     for k=1:1:n_point
-      disp('-----------------------------------------------------------------------------------------------'
-      disp(['POURCENTAGE DE POINTS ANALYSES = ' num2str((k-1)/n_point)' pourcent']);
+      disp('-----------------------------------------------------------------------------------------------');
+      disp(['POURCENTAGE DE POINTS ANALYSES = ' num2str(100*(k-1)/n_point) ' pourcent']);
       [p,tp] = pression(Micro(k,:),rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt);
       p_rms = rms(p);
       deci = 20*log(p_rms/(2*10^(-5)));
@@ -37,8 +37,8 @@ if (rep=='o')
     end
   else
     for k=1:1:n_point
-      disp('-----------------------------------------------------------------------------------------------'
-      disp(['POURCENTAGE DE POINTS ANALYSES = ',num2str((k-1)/n_point),' pourcent']);
+      disp('-----------------------------------------------------------------------------------------------');
+      disp(['POURCENTAGE DE POINTS ANALYSES = ',num2str(100*(k-1)/n_point),' pourcent']);
       [p,tp] = pression_violon(Micro(k,:),rho_air,c_son,A,wn,Y,u,s,t,ps,pt);
       p_rms = rms(p);
       deci = 20*log(p_rms/(2*10^(-5)));
@@ -46,6 +46,6 @@ if (rep=='o')
     end
   end
 
-  polarplot(phi,deci);
+  polar(phi,decibel);
   title('Diagramme de rayonnement');
 end

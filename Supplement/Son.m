@@ -48,8 +48,7 @@
   end
 
   b = repmat(p,1,N);
-  L1 = length(tpp);
-  T = tpp(length(tpp))/(L1-1);
+  T = duree_son/(length(tpp)-1);
   Fs = 1/T;
 
   Niveau_sonore = 0.15/max(b);
