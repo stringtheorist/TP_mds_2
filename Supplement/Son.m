@@ -1,4 +1,7 @@
-  disp(' ');
+%%------------------------------------------------------------------------------------------------
+%% Questions
+
+ disp(' ');
   disp('Donner la position du micro');
   P_micro(1) = input('x = ');
   while (1)
@@ -9,12 +12,6 @@
     disp('y doit être différent de 0.');
   end
 
-  if (rI=='p')
-    [p,tp] = pression(P_micro,rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt);
-  else
-    [p,tp] = pression_violon(P_micro,rho_air,c_son,A,wn,Y,u,s,t,ps,pt);
-  end
-
   duree_son = 1.2;
   disp(' ');
   rep = input('Durée pour le son (en s.) : ');
@@ -23,9 +20,18 @@
   end
 
   rep = input('Voulez vous afficher le graphique de la pression acoustique p(t) ? (o/n) ','s');
+
+%%------------------------------------------------------------------------------------------------
+
+  if (rI=='p')
+    [p,tp] = pression(P_micro,rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt);
+  else
+    [p,tp] = pression_violon(P_micro,rho_air,c_son,A,wn,Y,u,s,t,ps,pt);
+  end
+
   if (rep=='o')
     figure(6);
-    plot(t,tp);
+    plot(tp,p);
     xlabel('t [s]'); ylabel('p(t) [N/m²]');
   end
 
@@ -42,8 +48,8 @@
   end
 
   b = repmat(p,1,N);
-  L = length(tpp);
-  T = tpp(length(tpp))/(L-1);
+  L1 = length(tpp);
+  T = tpp(length(tpp))/(L1-1);
   Fs = 1/T;
 
   Niveau_sonore = 0.15/max(b);

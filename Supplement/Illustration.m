@@ -23,13 +23,17 @@ for i = 1:length(Type)
         %-> visualisation de u(s,t) au cours du temps
        figure(5);
 
+       for j=1:1:length(s)
+        b(j) = max(u(j,:));
+       end
+       zoom = H/max(b);
        for j=1:Nt
-           plot(s,u(:,j),'k','LineWidth',2);hold on
-           plot(s([1 10 20]),u([1 10 20],j),'o','MarkerSize',8,'LineWidth',2)
+           plot(s, zoom*u(:,j),'k','LineWidth',2);hold on
+           plot(s([1 10 20]), zoom*u([1 10 20],j),'o','MarkerSize',8,'LineWidth',2)
            hold off
            xlabel('s [m]');ylabel('u(s,t) [m]');
            axis equal;axis([0,L,-H,H])
-           title(['temps = ',num2str(t(j)),' s.',newline,'Fin = ',num2str(tmax),' s.']);
+           title(['temps = ',num2str(t(j)),' s.',newline,'Fin = ',num2str(tmax),' s.',newline,'zoom = ',num2str(zoom),'x']);
            set(gca,'FontSize',24);
            pause(dt)
        end

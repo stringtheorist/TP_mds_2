@@ -12,11 +12,11 @@ addpath('./Violon');
 %% ========================================================================
 % Chargement des parametres
 nmax=50;        % Nombre maximal de mode considere
-Note=540;       % Frequence fondamentale [Hz]
+Note=440;       % Frequence fondamentale [Hz]
 NP=5;           % Nombre de période (pour la plus grande des périodes, ie. le mode avec la plus petite fréquence) que l'on veut représenter
 P_micro = [1 1]; %Position du micro
 ps = 10; %Echantillonage de s pour permettre de calculer rapidement une intégrale sur [0,L]
-pt = 50; %Echantillonage de t
+pt = 10; %Echantillonage de t
 
 [L,R,E,ro,H,el,Nw,Aff,rho_air,c_son,omega]=ParamInit(nmax);
 
