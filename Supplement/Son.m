@@ -3,6 +3,8 @@
 
  disp(' ');
   disp('Donner la position du micro');
+  disp(['La corde est situé entre x = 0 et x =',num2str(L),' en y = 0']);
+  disp(' ');
   P_micro(1) = input('x = ');
   while (1)
     P_micro(2) = input('y = ');
@@ -50,7 +52,11 @@
   b = repmat(p,1,N);
   T = duree_son/(length(tpp)-1);
   Fs = 1/T;
+  l = tpp(length(tpp));
+  t0 = l/2;
+  tau = 0.1*l;
+  gaussian = exp(-((tpp-t0)/tau).^2);
 
   Niveau_sonore = 0.15/max(b);
-  sound(Niveau_sonore*b,Fs);
+  sound(gaussian.*(Niveau_sonore*b),Fs);
 
