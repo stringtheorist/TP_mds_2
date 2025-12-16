@@ -24,6 +24,20 @@ if (rep=='o')
     disp('Les réponses acceptables sont v ou g');
   end
 
+
+  %% Choix des conditions aux limites
+  validBC = {'DD','NN','DN','ND'};
+
+  disp(' ');
+  while true
+      typeBC = upper(strtrim(input("Choisissez le type de C.L. ('DD' = instrument 'normal','NN','DN','ND') : ",'s')));
+      if ismember(typeBC, validBC)
+          break
+      end
+      disp("Réponse invalide. Les choix possibles sont : DD, NN, DN, ND.");
+  end
+
+
   %% ========================================================================
   % Chargement des parametres
 
@@ -50,7 +64,7 @@ if (rep=='o')
     [A,C,N0,Def]=ParamInter(R,L,ro,E,Note);
 
     % Domaine modal
-    [n,kn,wn,Lamb,Per,Freq]=DomaineModal(L, C, nmax);
+    [n,kn,wn,Lamb,Per,Freq] = DomaineModal(L, C, nmax, typeBC);
 
     % Domaine spatial
     [s,Ns,ds]=DomaineSpatial(L,Lamb);
@@ -63,31 +77,32 @@ if (rep=='o')
 
     if (rI=='g')
       % Modes propres
-      Y=ModePropre(kn,s,Nw,Aff,nmax);
+      Y = ModePropre(kn, s, Nw, Aff, typeBC);
 
       % Amplitude modale
-      [an,bn]=AmplitudeModale(L,el,kn,wn,n,H,Aff);
+      [an, bn] = AmplitudeModale(Y, s, wn, L, el, H, Aff);
 
       % Fonction en temps
-      T=FctTemporelle(wn,an,bn,t,Aff);
+      T = FctTemporelle(wn, an, bn, t, Aff);
 
       % Deplacement
-      u=FctDeplacement(Y,T);
+      u=FctDeplacement(Y, T);
     else
       % Modes propres
-      Y=ModesPropresViolon(kn,s,Nw,Aff,nmax);
+      Y=ModesPropresViolon(kn, s, Nw, Aff, nmax);
 
       % Fonction en temps
-      q = FonctionTemporelleViolon(s,t,kn,wn,L,A,el,ro,omega,Aff);
+      q = FonctionTemporelleViolon(s, t, kn, wn, L, A, el, ro, omega, Aff);
 
       % Deplacement
       u=FctDeplacementViolon(Y,q);
 
     end
+    progression = 'o'; %% Affiche la progression des calculs de la pression sonore
     if (rI=='g')
-      [p,tp] = pression(P_micro,rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt);
+      [p,tp] = pression(P_micro, rho_air, c_son, A, wn, an, bn, Y, s, t, ps, pt,progression);
     else
-      [p,tp] = pression_violon(P_micro,rho_air,c_son,A,wn,Y,u,s,t,ps,pt);
+      [p,tp] = pression_violon(P_micro, rho_air, c_son, A, wn, Y, u, s, t, ps, pt,progression);
     end
     Pt(k,:) = tp;
     Pp(k,:) = p;
@@ -112,7 +127,7 @@ if (rep=='o')
         rythme = [];
         k = 1;
         disp("Et indiquer les notes que vous voulez jouer en indiquant la note (do re mi fa sol la si) et les silences par (S).");
-        disp("Indiquer les notes que vous voulez jouer en indiquant la note puis si c'est une double croche (d), croche (c), noire (n), blanche (b) ou une ronde (r).");
+        disp("Indiquer les notes que vous voulez jouer en indiquant la note puis si c'est : une double croche (d), croche (c), noire (n), blanche (b) ou une ronde (r).");
         disp(' ');
         disp('Fin de partition = appuyer sur ENTRER');
         while (1)

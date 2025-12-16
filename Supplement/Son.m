@@ -24,11 +24,11 @@
   rep = input('Voulez vous afficher le graphique de la pression acoustique p(t) ? (o/n) ','s');
 
 %%------------------------------------------------------------------------------------------------
-
+  progression = 'o'; %% Affiche la progression des calculs de la pression sonore
   if (rI=='p')
-    [p,tp] = pression(P_micro,rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt);
+    [p,tp] = pression(P_micro,rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt,progression);
   else
-    [p,tp] = pression_violon(P_micro,rho_air,c_son,A,wn,Y,u,s,t,ps,pt);
+    [p,tp] = pression_violon(P_micro,rho_air,c_son,A,wn,Y,u,s,t,ps,pt,progression);
   end
 
   if (rep=='o')

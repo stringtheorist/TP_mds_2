@@ -1,4 +1,4 @@
-function [p,tp] = pression(P_micro,rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt) %si ps = 1 on prend tous les s et t, si pas = 2, on prend un pas sur 2
+function [p,tp] = pression(P_micro,rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt,progression) %si ps = 1 on prend tous les s et t, si pas = 2, on prend un pas sur 2
 
   sp = zeros(1,floor(length(s)/ps));
   for jp=1:1:length(sp)
@@ -27,6 +27,9 @@ function [p,tp] = pression(P_micro,rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt) %si ps 
   pn = zeros(length(wn),length(tp),length(sp));
   coeff_1 = rho_air * sqrt(A/pi) / 4*pi*c_son;
 
+  if (progression=='o')
+    disp('Calcul de la pression sonore linéique');
+  end
   denominateur = length(wn)*length(tp)*length(r);
   etape = 0;
   for k=1:1:length(wn)
@@ -40,11 +43,16 @@ function [p,tp] = pression(P_micro,rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt) %si ps 
         pn(k,l,m) = coeff_1 *amp*real(coeff_2 * expo * dephasage * cos(theta(m)) / r(m));
       end
     end
-    disp(['Calcul en cours... ',num2str(100*etape/denominateur),' pourcent']);
+    if (progression=='o')
+      disp(['Calcul en cours... ',num2str(100*etape/denominateur),' pourcent']);
+    end
   end
 
   %Intégration
-  disp('Intégration');
+  if (progression=='o')
+    disp('Intégration');
+  end
+
   I = zeros(1,length(tp));
   denominateur = length(wn)*length(tp)*(length(sp)-1);
   etape = 0;
@@ -57,7 +65,9 @@ function [p,tp] = pression(P_micro,rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt) %si ps 
       end
       I(l) += In;
     end
-    disp(['Intégration en cours... ',num2str(100*etape/denominateur),' pourcent']);
+    if (progression=='o')
+      disp(['Intégration en cours... ',num2str(100*etape/denominateur),' pourcent']);
+    end
   end
 
   p = I;
