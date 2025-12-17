@@ -100,9 +100,9 @@ if (rep=='o')
     end
     progression = 'o'; %% Affiche la progression des calculs de la pression sonore
     if (rI=='g')
-      [p,tp] = pression(P_micro, rho_air, c_son, A, wn, an, bn, Y, s, t, ps, pt,progression);
+      [p,tp] = pression(P_micro, rho_air, c_son, A, wn, an, bn, Y, s, t, ps, pt, progression);
     else
-      [p,tp] = pression_violon(P_micro, rho_air, c_son, A, wn, Y, u, s, t, ps, pt,progression);
+      [p,tp] = pression_violon(P_micro, rho_air, c_son, A, wn, Y, u, s, t, ps, pt, progression);
     end
     Pt(k,:) = tp;
     Pp(k,:) = p;
@@ -146,7 +146,8 @@ if (rep=='o')
           disp('Mauvaise saisie');
         end
         rythme = [rythme_tapee];
-        partition(Partition,Nom_note);
+        disp(' ');
+        partition(Partition,rythme,Nom_note,rep);
         k++;
         disp(' ');
 
@@ -175,7 +176,8 @@ if (rep=='o')
 
           Partition = [Partition; Note_tapee];
           rythme = [rythme; rythme_tapee];
-          partition(Partition,Nom_note);
+          disp(' ');
+          partition(Partition,rythme,Nom_note,rep);
           k++;
           disp(' ');
         end
@@ -259,7 +261,7 @@ if (rep=='o')
         end
 
         Partition = [Note_tapee];
-        partition(Partition,Nom_note);
+        partition(Partition,rythme,Nom_note,rep);
         k++;
 
         while (1)
@@ -274,7 +276,7 @@ if (rep=='o')
             break
           end
           Partition = [Partition; Note_tapee];
-          partition(Partition,Nom_note);
+          partition(Partition,rythme,Nom_note,rep);
         end
       end
 
