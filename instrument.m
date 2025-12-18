@@ -109,11 +109,24 @@ if (rep=='o')
   end
 
 
-  %Composer la partition
+
+
+
+
+
+
+
+
+
+
+
+  %% ================= Composer la partition ===================
+
   rejouer='n';
   while (1)
     disp(' ');
     tempo = input('Saisisez le tempo (nb de notes/min): ');
+
     duree_noir = 60/tempo;
     Duree = [duree_noir/4; duree_noir/2; duree_noir; 2*duree_noir; 4*duree_noir];
     Nom_duree = ['d'; 'c'; 'n'; 'b'; 'r'];
@@ -121,42 +134,56 @@ if (rep=='o')
     if (rejouer=='n');
       rep = input('Voulez vous jouer autre choses que des noirs ? (o/n) ','s');
     end
+
+    %%====================== PAS SEULEMENT DES NOIRES =============================
     if (rep=='o')
       if (rejouer=='n')
+
         Partition = [];
         rythme = [];
         k = 1;
+
         disp("Et indiquer les notes que vous voulez jouer en indiquant la note (do re mi fa sol la si) et les silences par (S).");
         disp("Indiquer les notes que vous voulez jouer en indiquant la note puis si c'est : une double croche (d), croche (c), noire (n), blanche (b) ou une ronde (r).");
         disp(' ');
         disp('Fin de partition = appuyer sur ENTRER');
+
         while (1)
           Note_tapee = input(['Note ',num2str(k),' : '],'s');
+
           if any(strcmp(Note_tapee, cellstr(Nom_note)))
             break
           end
+
           disp('Mauvaise saisie.');
         end
         Partition = [Note_tapee];
         while (1)
+
           rythme_tapee = input(['rythme ',num2str(k),' : '],'s');
+
           if any(strcmp(rythme_tapee, cellstr(Nom_duree)))
             break
           end
+
           disp('Mauvaise saisie');
         end
+
         rythme = [rythme_tapee];
         disp(' ');
         partition(Partition,rythme,Nom_note,rep);
-        k++;
+        k = k + 1;
+
         disp(' ');
 
         while (1)
           while (1)
             Note_tapee = input(['Note ',num2str(k),' : '],'s');
+
             if (any(strcmp(Note_tapee, cellstr(Nom_note)))||(length(Note_tapee)==0))
               break
             end
+
             disp('Mauvaise saisie.');
           end
           if (length(Note_tapee)==0)
@@ -165,24 +192,30 @@ if (rep=='o')
 
           while (1)
             rythme_tapee = input(['rythme ',num2str(k),' : '],'s');
+
             if (any(strcmp(rythme_tapee, cellstr(Nom_duree)))||(length(rythme_tapee)==0))
               break
             end
+
             disp('Mauvaise saisie');
           end
+
           if (length(rythme_tapee)==0)
             break
           end
 
           Partition = [Partition; Note_tapee];
           rythme = [rythme; rythme_tapee];
+
           disp(' ');
+
           partition(Partition,rythme,Nom_note,rep);
-          k++;
+          k = k+1;
           disp(' ');
         end
       end
 
+      %%=================== ON JOUE LE MORCEAU ===================
       disp(' ');
       disp('Début du morceau');
 
@@ -195,7 +228,7 @@ if (rep=='o')
           if strcmp(note_jouee,strtrim(Nom_note(numero_note,:)))
             break
           end
-          numero_note++;
+          numero_note = numero_note + 1;
         end
 
         numero_rythme=1;
@@ -203,7 +236,7 @@ if (rep=='o')
           if strcmp(rythme_joue,strtrim(Nom_duree(numero_rythme,:)))
             break
           end
-          numero_rythme++;
+          numero_rythme = numero_rythme + 1;
         end
 
         duree_note = Duree(numero_rythme);
@@ -214,13 +247,13 @@ if (rep=='o')
 
           N = floor(duree_note/max(tp));
           tpp = zeros(1,length(tp)*N);
-          for k=1:1:length(tp)
-            tpp(k) = tp(k);
+          for k1=1:1:length(tp)
+            tpp(k1) = tp(k1);
           end
 
           for j=2:1:N
-            for k=1:1:length(tp)
-              tpp((j-1)*length(tp)+k)=tp(k)+tpp((j-1)*length(tp));
+            for k1=1:1:length(tp)
+              tpp((j-1)*length(tp)+k1)=tp(k1)+tpp((j-1)*length(tp));
             end
           end
 
@@ -245,6 +278,8 @@ if (rep=='o')
       end
 
 
+
+    %%====================== QUE DES NOIRS =============================
     else
       if (rejouer=='n')
         k = 1;
@@ -261,8 +296,8 @@ if (rep=='o')
         end
 
         Partition = [Note_tapee];
-        partition(Partition,rythme,Nom_note,rep);
-        k++;
+        partition(Partition,[' '],Nom_note,rep);
+        k = k + 1;
 
         while (1)
           while (1)
@@ -276,9 +311,12 @@ if (rep=='o')
             break
           end
           Partition = [Partition; Note_tapee];
-          partition(Partition,rythme,Nom_note,rep);
+          partition(Partition,['n'],Nom_note,rep); %% ON affiche la partition que pour des noirs
         end
       end
+
+
+      %%=================== ON JOUE LE MORCEAU (que des noirs) ===================
 
       disp(' ');
       disp('Début du morceau');
@@ -290,7 +328,7 @@ if (rep=='o')
           if strcmp(note_jouee,strtrim(Nom_note(numero_note,:)))
             break
           end
-          numero_note++;
+          numero_note = numero_note + 1;
         end
 
         if ~strcmp(note_jouee,'S') %Si ce n'est pas un silence que l'on va jouer
@@ -300,13 +338,13 @@ if (rep=='o')
           N = floor(duree_noir/max(tp));
 
           tpp = zeros(1,length(tp)*N);
-          for k=1:1:length(tp)
-            tpp(k) = tp(k);
+          for k1=1:1:length(tp)
+            tpp(k1) = tp(k1);
           end
 
           for j=2:1:N
-            for k=1:1:length(tp)
-              tpp((j-1)*length(tp)+k)=tp(k)+tpp((j-1)*length(tp));
+            for k1=1:1:length(tp)
+              tpp((j-1)*length(tp)+k1)=tp(k1)+tpp((j-1)*length(tp));
             end
           end
 
@@ -335,6 +373,6 @@ if (rep=='o')
     if (continuer=='n')
       break
     end
-    rejouer = input('Voulez vous rejouer la même partition avec un tempo différent ? (o/n) ','s');
+    rejouer = input('Voulez vous rejouer la même partition ? (o/n) ','s');
   end
 end

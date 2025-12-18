@@ -17,7 +17,7 @@
   duree_son = 1.2;
   disp(' ');
   rep = input('Durée pour le son (en s.) : ');
-  if (length(rep)!=0)
+  if (~isempty(rep))
     duree_son = rep;
   end
 

@@ -100,7 +100,7 @@ Type = [];
 
 r=input('Voulez vous visualiser u(s,t) a divers instant ? (o/n) ','s');
 if (r=='o')
-  Type = [1];
+  Type = 1;
 end
 
 r=input('Voulez vous visualiser u(s,t) en divers points de la corde ? (o/n) ','s');

@@ -10,9 +10,11 @@ if (rep=='o')
   %% CHAMP LOINTAIN
   Micro =  [];
   phi = [];
+
   for k=0:1:(n_point-1)
     Point = [Rayon*cos(2*pi*k/n_point)+milieu, Rayon*sin(2*pi*k/n_point)];
-    [Angle,x,y] = cart2sph([Point-[milieu 0] 0]);
+
+    [Angle,~,~] = cart2sph(Point(1) - milieu, Point(2), 0);
     Micro = [Micro; Point];
     phi = [phi Angle];
   end
@@ -22,20 +24,24 @@ if (rep=='o')
   phi_proche = [];
   for k=0:1:(n_point-1)
     Point = [Rayon_proche*cos(2*pi*k/n_point)+milieu, Rayon_proche*sin(2*pi*k/n_point)];
-    [Angle,x,y] = cart2sph([Point-[milieu 0] 0]);
+    [Angle,~,~] = cart2sph(Point(1) - milieu, Point(2), 0);
     Micro_proche = [Micro_proche; Point];
     phi_proche = [phi_proche Angle];
   end
 
 
+
+%------------------------------------------------------------------------------------------------------------
+%----------------------------CALCUL Champ "lointain"------------------------------------------------------
   decibel = [];
   ps = 20;
   pt = 200;
   progression = 'n'; %%N'affiche pas la profression des calculs de la pression sonore
+
   if (rI=='p')
     for k=1:1:n_point
       disp('-----------------------------------------------------------------------------------------------');
-      disp(['(Champ lointain) POINTS ANALYSES = ' num2str(100*(k-1)/n_point) ' pourcent']);
+      disp(['(Champ lointain) POINTS ANALYSES = ', num2str(100*(k-1)/n_point), ' %']);
       [p,tp] = pression(Micro(k,:),rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt,progression);
       p_rms = rms(p);
       deci = 20*log(p_rms/(2*10^(-5)));
@@ -44,7 +50,7 @@ if (rep=='o')
   else
     for k=1:1:n_point
       disp('-----------------------------------------------------------------------------------------------');
-      disp(['(Champ lointain) POINTS ANALYSES = ',num2str(100*(k-1)/n_point),' pourcent']);
+      disp(['(Champ lointain) POINTS ANALYSES = ',num2str(100*(k-1)/n_point),' %']);
       [p,tp] = pression_violon(Micro(k,:),rho_air,c_son,A,wn,Y,u,s,t,ps,pt,progression);
       p_rms = rms(p);
       deci = 20*log(p_rms/(2*10^(-5)));
@@ -54,8 +60,10 @@ if (rep=='o')
   disp(' ');
   disp(' ');
   disp(' ');
+
+
 %------------------------------------------------------------------------------------------------------------
-%----------------------------Champ "proche"------------------------------------------------------
+%----------------------------CALCUL Champ "proche"------------------------------------------------------
 
   decibel_proche = [];
   ps = 20;
@@ -63,7 +71,7 @@ if (rep=='o')
   if (rI=='p')
     for k=1:1:n_point
       disp('-----------------------------------------------------------------------------------------------');
-      disp(['(Champ proche) POINTS ANALYSES = ' num2str(100*(k-1)/n_point) ' pourcent']);
+      disp(['(Champ proche) POINTS ANALYSES = ', num2str(100*(k-1)/n_point), ' %']);
       [p,tp] = pression(Micro_proche(k,:),rho_air,c_son,A,wn,an,bn,Y,s,t,ps,pt,progression);
       p_rms = rms(p);
       deci = 20*log(p_rms/(2*10^(-5)));
@@ -72,7 +80,7 @@ if (rep=='o')
   else
     for k=1:1:n_point
       disp('-----------------------------------------------------------------------------------------------');
-      disp(['(Champ proche) POINTS ANALYSES = ',num2str(100*(k-1)/n_point),' pourcent']);
+      disp(['(Champ proche) POINTS ANALYSES = ',num2str(100*(k-1)/n_point),' %']);
       [p,tp] = pression_violon(Micro_proche(k,:),rho_air,c_son,A,wn,Y,u,s,t,ps,pt,progression);
       p_rms = rms(p);
       deci = 20*log(p_rms/(2*10^(-5)));
