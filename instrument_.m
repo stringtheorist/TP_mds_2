@@ -43,7 +43,8 @@ if (rep=='o')
 
   nmax=50;        % Nombre maximal de mode considere
   Note_I =   [261.626  293.665   329.628    349.228   391.995   440    493.883];       % Note à partir du do de l'octave "3" : https://fr.wikipedia.org/wiki/Fr%C3%A9quences_des_touches_du_piano
-  Nom_note = ['do';   're';        'mi';      'fa';    'sol';   'la';     'si';  'S'];
+  Nom_note = {'do', 're', 'mi', 'fa', 'sol', 'la', 'si', 'S'};
+
   NP=1;           % Nombre de période (pour la plus grande des périodes, ie. le mode avec la plus petite fréquence) que l'on veut représenter
   P_micro = [1 1]; %Position du micro
   ps = 10; %Echantillonage de s pour permettre de calculer rapidement une intégrale sur [0,L]
@@ -57,7 +58,7 @@ if (rep=='o')
   for k=1:1:length(Note_I)
     Note = Note_I(k);
     disp(' ');
-    disp(['Calcul du son de la note : ',Nom_note(k,:)]);
+    disp(['Calcul du son de la note : ',Nom_note(k)]);
     disp('---------------------------------------------');
 
     % Parametres intermediaires
@@ -139,7 +140,7 @@ if (rep=='o')
     if (rep=='o')
       if (rejouer=='n')
 
-        Partition = [];
+        Partition = {};
         rythme = [];
         k = 1;
 
@@ -157,7 +158,7 @@ if (rep=='o')
 
           disp('Mauvaise saisie.');
         end
-        Partition = [Note_tapee];
+        Partition = {Note_tapee};
         while (1)
 
           rythme_tapee = input(['rythme ',num2str(k),' : '],'s');
@@ -204,8 +205,8 @@ if (rep=='o')
             break
           end
 
-          Partition = [Partition; Note_tapee];
-          rythme = [rythme; rythme_tapee];
+          Partition = {Partition, Note_tapee};
+          rythme = [rythme; rythme_tape];
 
           disp(' ');
 
@@ -219,13 +220,13 @@ if (rep=='o')
       disp(' ');
       disp('Début du morceau');
 
-      for k=1:1:length(Partition(:,1))
-        note_jouee = strtrim(Partition(k,:));
+      for k=1:1:length(Partition)
+        note_jouee = strtrim(Partition(k));
         rythme_joue = rythme(k,:);
 
         numero_note=1;
         while (1)
-          if strcmp(note_jouee,strtrim(Nom_note(numero_note,:)))
+          if strcmp(note_jouee,strtrim(Nom_note(numero_note)))
             break
           end
           numero_note = numero_note + 1;
@@ -295,7 +296,7 @@ if (rep=='o')
           disp('Mauvaise saisie.');
         end
 
-        Partition = [Note_tapee];
+        Partition = {Note_tapee};
         partition(Partition,[' '],Nom_note,rep);
         k = k + 1;
 
@@ -310,7 +311,7 @@ if (rep=='o')
           if (length(Note_tapee)==0)
             break
           end
-          Partition = [Partition; Note_tapee];
+          Partition = {Partition, Note_tapee};
           partition(Partition,['n'],Nom_note,rep); %% ON affiche la partition que pour des noirs
         end
       end
@@ -320,12 +321,12 @@ if (rep=='o')
 
       disp(' ');
       disp('Début du morceau');
-      for k=1:1:length(Partition(:,1))
-        note_jouee = strtrim(Partition(k,:));
+      for k=1:1:length(Partition)
+        note_jouee = strtrim(Partition(k));
 
         numero_note=1;
         while (1)
-          if strcmp(note_jouee,strtrim(Nom_note(numero_note,:)))
+          if strcmp(note_jouee,strtrim(Nom_note(numero_note)))
             break
           end
           numero_note = numero_note + 1;

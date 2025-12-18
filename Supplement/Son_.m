@@ -1,6 +1,3 @@
-%%------------------------------------------------------------------------------------------------
-%% Questions
-
  disp(' ');
   disp('Donner la position du micro');
   disp(['La corde est situé entre x = 0 et x =',num2str(L),' en y = 0']);
