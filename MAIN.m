@@ -130,4 +130,4 @@ diagramme_directivite;
 
 
 disp(' ');
-instrument;
+musique;

@@ -8,7 +8,7 @@
   P_micro(1) = input('x = ');
   while (1)
     P_micro(2) = input('y = ');
-    if (P_micro(2)!=0)
+    if ~(P_micro(2)==0)
       break
     end
     disp('y doit être différent de 0.');

@@ -43,7 +43,8 @@ if (rep=='o')
 
   nmax=50;        % Nombre maximal de mode considere
   Note_I =   [261.626  293.665   329.628    349.228   391.995   440    493.883];       % Note à partir du do de l'octave "3" : https://fr.wikipedia.org/wiki/Fr%C3%A9quences_des_touches_du_piano
-  Nom_note = ['do';   're';        'mi';      'fa';    'sol';   'la';     'si';  'S'];
+  Nom_note = {'do', 're', 'mi', 'fa', 'sol', 'la', 'si', 'S'};
+
   NP=1;           % Nombre de période (pour la plus grande des périodes, ie. le mode avec la plus petite fréquence) que l'on veut représenter
   P_micro = [1 1]; %Position du micro
   ps = 10; %Echantillonage de s pour permettre de calculer rapidement une intégrale sur [0,L]
@@ -57,7 +58,7 @@ if (rep=='o')
   for k=1:1:length(Note_I)
     Note = Note_I(k);
     disp(' ');
-    disp(['Calcul du son de la note : ',Nom_note(k,:)]);
+    disp(['Calcul du son de la note : ',Nom_note(k)]);
     disp('---------------------------------------------');
 
     % Parametres intermediaires
@@ -135,11 +136,15 @@ if (rep=='o')
       rep = input('Voulez vous jouer autre choses que des noirs ? (o/n) ','s');
     end
 
+
+
+
+
     %%====================== PAS SEULEMENT DES NOIRES =============================
     if (rep=='o')
       if (rejouer=='n')
 
-        Partition = [];
+        Partition = {};
         rythme = [];
         k = 1;
 
@@ -157,7 +162,7 @@ if (rep=='o')
 
           disp('Mauvaise saisie.');
         end
-        Partition = [Note_tapee];
+        Partition = {Note_tapee};
         while (1)
 
           rythme_tapee = input(['rythme ',num2str(k),' : '],'s');
@@ -180,7 +185,7 @@ if (rep=='o')
           while (1)
             Note_tapee = input(['Note ',num2str(k),' : '],'s');
 
-            if (any(strcmp(Note_tapee, cellstr(Nom_note)))||(length(Note_tapee)==0))
+            if (any(strcmp(Note_tapee, Nom_note))||(length(Note_tapee)==0))
               break
             end
 
@@ -204,7 +209,7 @@ if (rep=='o')
             break
           end
 
-          Partition = [Partition; Note_tapee];
+          Partition{end +1} = Note_tapee;
           rythme = [rythme; rythme_tapee];
 
           disp(' ');
@@ -215,17 +220,17 @@ if (rep=='o')
         end
       end
 
-      %%=================== ON JOUE LE MORCEAU ===================
+      %%=================== ON JOUE LE MORCEAU (pas que des noires) ===================
       disp(' ');
       disp('Début du morceau');
 
-      for k=1:1:length(Partition(:,1))
-        note_jouee = strtrim(Partition(k,:));
+      for k=1:1:length(Partition)
+        note_jouee = strtrim(Partition{k});
         rythme_joue = rythme(k,:);
 
         numero_note=1;
         while (1)
-          if strcmp(note_jouee,strtrim(Nom_note(numero_note,:)))
+          if strcmp(note_jouee,strtrim(Nom_note{numero_note}))
             break
           end
           numero_note = numero_note + 1;
@@ -233,7 +238,7 @@ if (rep=='o')
 
         numero_rythme=1;
         while (1)
-          if strcmp(rythme_joue,strtrim(Nom_duree(numero_rythme,:)))
+          if strcmp(rythme_joue,strtrim(Nom_duree(numero_rythme)))
             break
           end
           numero_rythme = numero_rythme + 1;
@@ -245,37 +250,42 @@ if (rep=='o')
           p = Pp(numero_note,:);
           tp = Pt(numero_note,:);
 
-          N = floor(duree_note/max(tp));
-          tpp = zeros(1,length(tp)*N);
-          for k1=1:1:length(tp)
-            tpp(k1) = tp(k1);
-          end
+           
+           N = ceil(duree_note/max(tp));
+           
+           tpp = [tp];
+           for j=2:N
+               tpp = [tpp tpp(end)+tp];
+           end
+           signal = repmat(p,1,N);
+           
+           Nt = round(duree_note * Fs);          % nombre d'échantillons
+           t = linspace(0, duree_note, Nt);      % axe temporel
+           signal = interp1(tpp,signal,t); % Re-échantillonage
+          
+           l = t(end);
+           t0 = l/3;
+           tau = 0.6*l;
+           gaussian = exp(-((t - t0)/tau).^2);
+        
+           Niveau_sonore = 0.15 / max(abs(signal));
+        
+           son_note = [son_note, gaussian .* Niveau_sonore .* signal];
 
-          for j=2:1:N
-            for k1=1:1:length(tp)
-              tpp((j-1)*length(tp)+k1)=tp(k1)+tpp((j-1)*length(tp));
-            end
-          end
+  
+        else % Si c'est un silence
 
-          son_note = repmat(p,1,N);
+          son_note = [son_note, zeros(1, round(duree_note * Fs))];
 
-          T = duree_note/(length(tp)*N-1);
-          Fs = 1/T;
-          l = tpp(length(tpp));
-          t0 = l/3;
-          tau = 0.6*l;
-          gaussian = exp(-((tpp-t0)/tau).^2);
-
-          disp(note_jouee);
-
-          Niveau_sonore = 0.15/max(son_note);
-          sound(gaussian.*(Niveau_sonore*son_note),Fs);
-
-        else %Si c'est un silece que l'on doit jouer
-          disp('S');
-          pause(duree_note);
         end
       end
+      sound(son_note,Fs);
+
+
+
+
+
+
 
 
 
@@ -295,7 +305,7 @@ if (rep=='o')
           disp('Mauvaise saisie.');
         end
 
-        Partition = [Note_tapee];
+        Partition = {Note_tapee};
         partition(Partition,[' '],Nom_note,rep);
         k = k + 1;
 
@@ -310,67 +320,75 @@ if (rep=='o')
           if (length(Note_tapee)==0)
             break
           end
-          Partition = [Partition; Note_tapee];
+          Partition{end+1} = Note_tapee;
           partition(Partition,['n'],Nom_note,rep); %% ON affiche la partition que pour des noirs
+          k = k + 1;
         end
       end
+
+
 
 
       %%=================== ON JOUE LE MORCEAU (que des noirs) ===================
 
       disp(' ');
       disp('Début du morceau');
-      for k=1:1:length(Partition(:,1))
-        note_jouee = strtrim(Partition(k,:));
+
+      son_note = [];
+      Fs = 44100;  % Echantillonage
+
+      for k=1:1:length(Partition)
+        note_jouee = strtrim(Partition{k});
 
         numero_note=1;
         while (1)
-          if strcmp(note_jouee,strtrim(Nom_note(numero_note,:)))
+          if strcmp(note_jouee,strtrim(Nom_note{numero_note}))
             break
           end
           numero_note = numero_note + 1;
         end
 
+        duree_note = duree_noir;              % durée réelle de la note
+
         if ~strcmp(note_jouee,'S') %Si ce n'est pas un silence que l'on va jouer
           p = Pp(numero_note,:);
           tp = Pt(numero_note,:);
 
-          N = floor(duree_noir/max(tp));
+           
+           N = ceil(duree_note/max(tp));
+           
+           tpp = [tp];
+           for j=2:N
+               tpp = [tpp tpp(end)+tp];
+           end
+           signal = repmat(p,1,N);
+           
+           Nt = round(duree_note * Fs);          % nombre d'échantillons
+           t = linspace(0, duree_note, Nt);      % axe temporel
+           signal = interp1(tpp,signal,t); % Re-échantillonage
+          
+           l = t(end);
+           t0 = l/3;
+           tau = 0.6*l;
+           gaussian = exp(-((t - t0)/tau).^2);
+        
+           Niveau_sonore = 0.15 / max(abs(signal));
+        
+           son_note = [son_note, gaussian .* Niveau_sonore .* signal];
 
-          tpp = zeros(1,length(tp)*N);
-          for k1=1:1:length(tp)
-            tpp(k1) = tp(k1);
-          end
-
-          for j=2:1:N
-            for k1=1:1:length(tp)
-              tpp((j-1)*length(tp)+k1)=tp(k1)+tpp((j-1)*length(tp));
-            end
-          end
-
-          son_note = repmat(p,1,N);
-
-          T = duree_noir/(length(tp)*N-1);
-          Fs = 1/T;
-          l = tpp(length(tpp));
-          t0 = l/3;
-          tau = 0.6*l;
-          gaussian = exp(-((tpp-t0)/tau).^2);
-
-          disp(note_jouee);
-
-          Niveau_sonore = 0.15/max(son_note);
-          sound(gaussian.*(Niveau_sonore*son_note),Fs);
+  
         else % Si c'est un silence
-          disp('S');
-          pause(duree_noir);
+
+          son_note = [son_note, zeros(1, round(duree_note * Fs))];
+
         end
       end
+      sound(son_note,Fs);
     end
 
 
     continuer = input('Voulez vous continuer à jouer de la musique ? (o/n) ','s');
-    if (continuer=='n')
+    if ~(continuer=='o')
       break
     end
     rejouer = input('Voulez vous rejouer la même partition ? (o/n) ','s');
