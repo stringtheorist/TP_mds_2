@@ -54,7 +54,7 @@ disp(['[Nt,Ns,Nw]=[' num2str([Nt,Ns,Nw]) ']']);
 
 while (1)
   rI = input('Voulez vous simuler un violon (v) ou une corde pincée (p) ? ','s' );
-  if ((rI=='v')||(rI=='p'))
+  if strcmp(rI, 'v') || strcmp(rI, 'p')
     break
   end
   disp('Les réponses acceptables sont : v ou p');
@@ -121,7 +121,7 @@ Illustration(Type,u,s,t,Nt,L,H,dt,tmax);
 disp(' ');
 r=input('Voulez vous produire le son associé ? (o/n) ','s');
 if (r=='o')
-  Son
+  Son_;
 end
 
 
@@ -130,4 +130,8 @@ diagramme_directivite;
 
 
 disp(' ');
+<<<<<<< HEAD
 musique;
+=======
+instrument_;
+>>>>>>> c950bb789b94c2b178f2ab4a1ef9129b69b375db

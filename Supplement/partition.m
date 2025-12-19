@@ -1,9 +1,44 @@
+<<<<<<< HEAD
 function partition(Partition, Rythme, Nom_note, rep)
     % Initialisation des lignes de la portée
     C0 = [' '; '-'];
     for k = 1:4
         C0 = [C0; ' '];
         C0 = [C0; '-'];
+=======
+function partition(Partition,Rythme,Nom_note,rep)
+  C0 = [' '; '-'];
+  for k=1:1:4
+    C0 = [C0; ' '];
+    C0 = [C0; '-'];
+  end
+  C0 = [C0; ' '; ' '];
+  tab = [C0];
+
+  D0 = [' '; '-'];
+  for k=1:1:4
+    D0 = [D0; ' '];
+    D0 = [D0; '-'];
+  end
+  D0 = [D0; ' '; '-'];
+
+  %% RECUPERATION DE LA NOTE
+  note_jouee_avant = ' ';
+  numero_note_avant = 0;
+  for k=1:1:length(Partition)
+    if (rep=='o')
+      rythme_jouee = strtrim(Rythme(k));
+    else
+      rythme_jouee = ' ';
+    end
+    note_jouee = strtrim(Partition(k));
+    numero_note = 1;
+    while (1)
+      if strcmp(note_jouee,strtrim(Nom_note(numero_note)))
+        break
+      end
+      numero_note = numero_note + 1;
+>>>>>>> c950bb789b94c2b178f2ab4a1ef9129b69b375db
     end
     C0 = [C0; ' '; ' '];
 
