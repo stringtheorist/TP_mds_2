@@ -209,13 +209,8 @@ if (rep=='o')
             break
           end
 
-<<<<<<<< HEAD:musique.m
           Partition{end +1} = Note_tapee;
           rythme = [rythme; rythme_tapee];
-========
-          Partition = {Partition, Note_tapee};
-          rythme = [rythme; rythme_tape];
->>>>>>>> c950bb789b94c2b178f2ab4a1ef9129b69b375db:instrument_.m
 
           disp(' ');
 
@@ -230,20 +225,12 @@ if (rep=='o')
       disp('Début du morceau');
 
       for k=1:1:length(Partition)
-<<<<<<<< HEAD:musique.m
         note_jouee = strtrim(Partition{k});
-========
-        note_jouee = strtrim(Partition(k));
->>>>>>>> c950bb789b94c2b178f2ab4a1ef9129b69b375db:instrument_.m
         rythme_joue = rythme(k,:);
 
         numero_note=1;
         while (1)
-<<<<<<<< HEAD:musique.m
           if strcmp(note_jouee,strtrim(Nom_note{numero_note}))
-========
-          if strcmp(note_jouee,strtrim(Nom_note(numero_note)))
->>>>>>>> c950bb789b94c2b178f2ab4a1ef9129b69b375db:instrument_.m
             break
           end
           numero_note = numero_note + 1;
@@ -263,29 +250,29 @@ if (rep=='o')
           p = Pp(numero_note,:);
           tp = Pt(numero_note,:);
 
-           
+
            N = ceil(duree_note/max(tp));
-           
+
            tpp = [tp];
            for j=2:N
                tpp = [tpp tpp(end)+tp];
            end
            signal = repmat(p,1,N);
-           
+
            Nt = round(duree_note * Fs);          % nombre d'échantillons
            t = linspace(0, duree_note, Nt);      % axe temporel
            signal = interp1(tpp,signal,t); % Re-échantillonage
-          
+
            l = t(end);
            t0 = l/3;
            tau = 0.6*l;
            gaussian = exp(-((t - t0)/tau).^2);
-        
+
            Niveau_sonore = 0.15 / max(abs(signal));
-        
+
            son_note = [son_note, gaussian .* Niveau_sonore .* signal];
 
-  
+
         else % Si c'est un silence
 
           son_note = [son_note, zeros(1, round(duree_note * Fs))];
@@ -333,11 +320,7 @@ if (rep=='o')
           if (length(Note_tapee)==0)
             break
           end
-<<<<<<<< HEAD:musique.m
           Partition{end+1} = Note_tapee;
-========
-          Partition = {Partition, Note_tapee};
->>>>>>>> c950bb789b94c2b178f2ab4a1ef9129b69b375db:instrument_.m
           partition(Partition,['n'],Nom_note,rep); %% ON affiche la partition que pour des noirs
           k = k + 1;
         end
@@ -350,7 +333,6 @@ if (rep=='o')
 
       disp(' ');
       disp('Début du morceau');
-<<<<<<<< HEAD:musique.m
 
       son_note = [];
       Fs = 44100;  % Echantillonage
@@ -361,14 +343,6 @@ if (rep=='o')
         numero_note=1;
         while (1)
           if strcmp(note_jouee,strtrim(Nom_note{numero_note}))
-========
-      for k=1:1:length(Partition)
-        note_jouee = strtrim(Partition(k));
-
-        numero_note=1;
-        while (1)
-          if strcmp(note_jouee,strtrim(Nom_note(numero_note)))
->>>>>>>> c950bb789b94c2b178f2ab4a1ef9129b69b375db:instrument_.m
             break
           end
           numero_note = numero_note + 1;
@@ -380,29 +354,29 @@ if (rep=='o')
           p = Pp(numero_note,:);
           tp = Pt(numero_note,:);
 
-           
+
            N = ceil(duree_note/max(tp));
-           
+
            tpp = [tp];
            for j=2:N
                tpp = [tpp tpp(end)+tp];
            end
            signal = repmat(p,1,N);
-           
+
            Nt = round(duree_note * Fs);          % nombre d'échantillons
            t = linspace(0, duree_note, Nt);      % axe temporel
            signal = interp1(tpp,signal,t); % Re-échantillonage
-          
+
            l = t(end);
            t0 = l/3;
            tau = 0.6*l;
            gaussian = exp(-((t - t0)/tau).^2);
-        
+
            Niveau_sonore = 0.15 / max(abs(signal));
-        
+
            son_note = [son_note, gaussian .* Niveau_sonore .* signal];
 
-  
+
         else % Si c'est un silence
 
           son_note = [son_note, zeros(1, round(duree_note * Fs))];
