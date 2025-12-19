@@ -121,7 +121,7 @@ Illustration(Type,u,s,t,Nt,L,H,dt,tmax);
 disp(' ');
 r=input('Voulez vous produire le son associé ? (o/n) ','s');
 if (r=='o')
-  Son_;
+  Son;
 end
 
 
@@ -130,8 +130,6 @@ diagramme_directivite;
 
 
 disp(' ');
-<<<<<<< HEAD
+
 musique;
-=======
-instrument_;
->>>>>>> c950bb789b94c2b178f2ab4a1ef9129b69b375db
+

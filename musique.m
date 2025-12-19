@@ -51,14 +51,14 @@ if (rep=='o')
   pt = 20; %Echantillonage de t
   %length(t) est toujours égal à  NP*20*nmax+1 quelque soit la note choisie
 
-  Pt = zeros(length(Note_I), floor((NP*20*nmax+1)/pt)); %length(tp)=floor(length(t)/pt)
-  Pp = zeros(length(Note_I), floor((NP*20*nmax+1)/pt));
+  Pt = {};
+  Pp = {};
 
   [L,R,E,ro,H,el,Nw,Aff,rho_air,c_son,omega]=ParamInit(nmax);
   for k=1:1:length(Note_I)
     Note = Note_I(k);
     disp(' ');
-    disp(['Calcul du son de la note : ',Nom_note(k)]);
+    disp(['Calcul du son de la note : ',Nom_note{k}]);
     disp('---------------------------------------------');
 
     % Parametres intermediaires
@@ -105,8 +105,8 @@ if (rep=='o')
     else
       [p,tp] = pression_violon(P_micro, rho_air, c_son, A, wn, Y, u, s, t, ps, pt, progression);
     end
-    Pt(k,:) = tp;
-    Pp(k,:) = p;
+    Pt{end+1} = tp;
+    Pp{end+1} = p;
   end
 
 
@@ -224,7 +224,10 @@ if (rep=='o')
       disp(' ');
       disp('Début du morceau');
 
-      for k=1:1:length(Partition)
+      son_note = [];
+      Fs = 44100;  % Echantillonage
+
+      for k=1:length(Partition)
         note_jouee = strtrim(Partition{k});
         rythme_joue = rythme(k,:);
 
@@ -247,8 +250,8 @@ if (rep=='o')
         duree_note = Duree(numero_rythme);
 
         if ~strcmp(note_jouee,'S') %Si ce n'est pas un silence que l'on va jouer
-          p = Pp(numero_note,:);
-          tp = Pt(numero_note,:);
+          p = Pp{numero_note};
+          tp = Pt{numero_note};
 
 
            N = ceil(duree_note/max(tp));
@@ -351,8 +354,8 @@ if (rep=='o')
         duree_note = duree_noir;              % durée réelle de la note
 
         if ~strcmp(note_jouee,'S') %Si ce n'est pas un silence que l'on va jouer
-          p = Pp(numero_note,:);
-          tp = Pt(numero_note,:);
+          p = Pp{numero_note};
+          tp = Pt{numero_note};
 
 
            N = ceil(duree_note/max(tp));
